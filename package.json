@@ -1,0 +1,16 @@
+{
+  "name": "discordmusicinformation",
+  "version": "1.0.0",
+  "description": "Bot que mostra as músicas escutadas no Deezer",
+  "main": "bot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Luiz Mello",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^12.3.1",
+    "request": "^2.88.2"
+  }
+}
