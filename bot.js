@@ -52,6 +52,4 @@ function musica (callback) {
     );
 }
 
-
-
 client.login(configuracao.DiscordToken);
