@@ -20,8 +20,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d4c7a005-d5e7-4f34-aa24-cb2f8d8a1213" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bot.js" beforeDir="false" afterPath="$PROJECT_DIR$/bot.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.json.example" beforeDir="false" afterPath="$PROJECT_DIR$/config.json.example" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,13 +57,18 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="javascript.nodejs.core.library.configured.version" value="12.18.1" />
-    <property name="javascript.nodejs.core.library.typings.version" value="12.12.68" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../twitchbotNode" />
+    <property name="javascript.nodejs.core.library.configured.version" value="14.12.0" />
+    <property name="javascript.nodejs.core.library.typings.version" value="14.11.10" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path" value="node" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="proofread" />
     <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
   </component>
   <component name="RunManager" selected="Node.js.Bot">
     <configuration name="Bot" type="NodeJSConfigurationType" path-to-js-file="bot.js" working-dir="$PROJECT_DIR$">
@@ -96,6 +104,7 @@
       <updated>1602173309824</updated>
       <workItem from="1602173311346" duration="13410000" />
       <workItem from="1602945552788" duration="868000" />
+      <workItem from="1603028812248" duration="425000" />
     </task>
     <servers />
   </component>
@@ -112,6 +121,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state x="714" y="343" key="#Notifications" timestamp="1602177924515">

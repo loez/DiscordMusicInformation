@@ -106,3 +106,4 @@ dist
 # Arquivos do Projeto
 ./config.json
 config.json
+/package-lock.json

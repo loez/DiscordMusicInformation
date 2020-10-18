@@ -2,24 +2,13 @@ const Discord = require("discord.js");
 const client = new Discord.Client();
 const request = require("request");
 const configuracao = require("./config.json")
-let ultima;
 const options = {
-    url: 'https://api.deezer.com/user/1186182186/history&access_token=' + configuracao.DeezerToken
+    url: 'https://api.deezer.com/user/'+ configuracao.DeezerUser +'/history&access_token='+ configuracao.DeezerToken+'&expires=0'
 };
-//const embed = new Discord.RichEmbed()
 
-client.on("ready", () => {
-    console.log("Rodando");
-    client.user.setActivity(ultima, {
-        type: "LISTENING",
-    });
-
-});
-
-setInterval(function (){ musica((musicaAtual) => {
+function RetornaMusica(musicaAtual) {
     console.log(musicaAtual);
-    //client.users.send("hello");
-   const canal =  client.channels.cache.get(configuracao.CanalID);
+    const canal = client.channels.cache.get(configuracao.CanalID);
     const Embed = new Discord.MessageEmbed()
         .setColor('#0099ff')
         .setTitle(musicaAtual.titulo)
@@ -27,22 +16,38 @@ setInterval(function (){ musica((musicaAtual) => {
         .setURL(musicaAtual.link)
         .setImage(musicaAtual.capa);
 
-   canal.send(Embed);
-    client.user.setActivity(musicaAtual.nomeartista,{type:"LISTENING"});
-})},180000);
+    client.user.setActivity(musicaAtual.nomeArtista, {type: "LISTENING"})
+        .then(() => {
+            if (configuracao.SendMensagem) {
+                canal.send(Embed);
+            }
+        })
+}
+
+function musicaTime(time) {
+    setTimeout(function (){
+        musica((musicaAtual) => {
+                RetornaMusica(musicaAtual);
+                musicaTime(musicaAtual.time * 1000);
+            }
+        )},time);
+}
+
 
 function musica (callback) {
     request(options,
         function (error, response, body) {
             if (!error && response.statusCode === 200) {
-                let musica = JSON.parse(body);
-                ultima = musica["data"][0]["title"] + " - " + musica["data"][0]["artist"]["name"];
-                let arrayRetorno = {};
-                arrayRetorno.titulo = musica["data"][0]["title"];
-                arrayRetorno.artista = musica["data"][0]["artist"]["name"];
-                arrayRetorno.capa = musica["data"][0]["album"]["cover"];
-                arrayRetorno.link = musica["data"][0]["link"];
-                arrayRetorno.nomeartista = musica["data"][0]["title"] + " - " + musica["data"][0]["artist"]["name"];
+                let json = JSON.parse(body),
+                    musica = json["data"][0],
+                    arrayRetorno = {
+                        'titulo': musica["title"],
+                        'artista': musica["artist"]["name"],
+                        'capa': musica["album"]["cover_medium"],
+                        'link': musica["link"],
+                        'nomeArtista': musica["title"] + " - " + musica["artist"]["name"],
+                        'time': musica["duration"]
+                    };
 
                 callback(arrayRetorno);
             } else {
@@ -52,4 +57,7 @@ function musica (callback) {
     );
 }
 
-client.login(configuracao.DiscordToken);
+client.login(configuracao.DiscordToken)
+    .then(() => {
+        musicaTime(0);
+    });

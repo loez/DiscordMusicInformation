@@ -1,5 +1,7 @@
 {
+  "DeezerUser": "7",
   "DeezerToken": "",
   "CanalID" : "",
-  "DiscordToken" : ""
+  "DiscordToken" : "",
+  "SendMensagem" : true
 }
