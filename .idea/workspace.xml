@@ -20,8 +20,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d4c7a005-d5e7-4f34-aa24-cb2f8d8a1213" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bot.js" beforeDir="false" afterPath="$PROJECT_DIR$/bot.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,7 +95,8 @@
       <option name="presentableId" value="Default" />
       <updated>1602173309824</updated>
       <workItem from="1602173311346" duration="13410000" />
-      <workItem from="1602945552788" duration="868000" />
+      <workItem from="1602945552788" duration="1089000" />
+      <workItem from="1603039596145" duration="99000" />
     </task>
     <servers />
   </component>
@@ -112,11 +113,13 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="714" y="343" key="#Notifications" timestamp="1602177924515">
+    <state x="714" y="343" key="#Notifications" timestamp="1603039606720">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state x="714" y="343" key="#Notifications/0.0.1920.1040/-1360.313.1360.728@0.0.1920.1040" timestamp="1603039606720" />
     <state x="714" y="343" key="#Notifications/0.0.1920.1040@0.0.1920.1040" timestamp="1602177924515" />
     <state x="414" y="174" width="1092" height="715" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1602174447220">
       <screen x="0" y="0" width="1920" height="1040" />

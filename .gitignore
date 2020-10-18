@@ -103,6 +103,10 @@ dist
 # TernJS port file
 .tern-port
 
+#Ambiente de Trabalho
+.idea/workspace.xml
+.idea
+
 # Arquivos do Projeto
 ./config.json
 config.json
