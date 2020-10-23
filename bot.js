@@ -2,6 +2,8 @@ const Discord = require("discord.js");
 const client = new Discord.Client();
 const request = require("request");
 const configuracao = require("./config.json")
+const ytdl = require('ytdl-core');
+
 const options = {
     url: 'https://api.deezer.com/user/'+ configuracao.DeezerUser +'/history&access_token='+ configuracao.DeezerToken+'&expires=0'
 };
@@ -21,8 +23,14 @@ function RetornaMusica(musicaAtual) {
             if (configuracao.SendMensagem) {
                 canal.send(Embed);
             }
+
         })
-}
+    }
+
+    setTimeout(async function (){
+        const audioplay = await client.channels.cache.get(configuracao.CanalAudio).join();
+        audioplay.play(ytdl('https://www.youtube.com/watch?v=Nc89e1cj844&list=RDMMH5rwG4qChJ4&index=2&ab_channel=JimmyMix ', { filter: 'audioonly' }),{volume:0.5});
+    },10000);
 
 function musicaTime(time) {
     setTimeout(function (){
@@ -60,4 +68,5 @@ function musica (callback) {
 client.login(configuracao.DiscordToken)
     .then(() => {
         musicaTime(0);
+
     });

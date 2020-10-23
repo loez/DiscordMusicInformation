@@ -3,5 +3,6 @@
   "DeezerToken": "",
   "CanalID" : "",
   "DiscordToken" : "",
-  "SendMensagem" : true
+  "SendMensagem" : true,
+  "CanalAudio" : ""
 }
