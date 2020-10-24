@@ -3,13 +3,21 @@ const client = new Discord.Client();
 const request = require("request");
 const configuracao = require("./config.json")
 const ytdl = require('ytdl-core');
+let audioplay;
 
 const options = {
-    url: 'https://api.deezer.com/user/'+ configuracao.DeezerUser +'/history&access_token='+ configuracao.DeezerToken+'&expires=0'
+    url: 'https://api.deezer.com/user/' + configuracao.DeezerUser + '/history&access_token=' + configuracao.DeezerToken + '&expires=0'
 };
 
 function RetornaMusica(musicaAtual) {
     console.log(musicaAtual);
+
+    const dispatcher = audioplay.play(musicaAtual.preview, {volume: 0.2});
+
+    dispatcher.on('finish', () => {
+        audioplay.disconnect();
+    });
+
     const canal = client.channels.cache.get(configuracao.CanalID);
     const Embed = new Discord.MessageEmbed()
         .setColor('#0099ff')
@@ -25,24 +33,21 @@ function RetornaMusica(musicaAtual) {
             }
 
         })
-    }
+}
 
-    setTimeout(async function (){
-        const audioplay = await client.channels.cache.get(configuracao.CanalAudio).join();
-        audioplay.play(ytdl('https://www.youtube.com/watch?v=Nc89e1cj844&list=RDMMH5rwG4qChJ4&index=2&ab_channel=JimmyMix ', { filter: 'audioonly' }),{volume:0.5});
-    },10000);
 
 function musicaTime(time) {
-    setTimeout(function (){
+    setTimeout(function () {
         musica((musicaAtual) => {
                 RetornaMusica(musicaAtual);
                 musicaTime(musicaAtual.time * 1000);
             }
-        )},time);
+        )
+    }, time);
 }
 
 
-function musica (callback) {
+function musica(callback) {
     request(options,
         function (error, response, body) {
             if (!error && response.statusCode === 200) {
@@ -54,7 +59,8 @@ function musica (callback) {
                         'capa': musica["album"]["cover_medium"],
                         'link': musica["link"],
                         'nomeArtista': musica["title"] + " - " + musica["artist"]["name"],
-                        'time': musica["duration"]
+                        'time': musica["duration"],
+                        'preview': musica["preview"]
                     };
 
                 callback(arrayRetorno);
@@ -67,6 +73,10 @@ function musica (callback) {
 
 client.login(configuracao.DiscordToken)
     .then(() => {
-        musicaTime(0);
+        setTimeout(async function () {
+            audioplay = await client.channels.cache.get(configuracao.CanalAudio).join();
+            musicaTime(0);
+        }, 10000);
 
     });
+

@@ -104,7 +104,7 @@ dist
 .tern-port
 
 #Ambiente de Trabalho
-.idea/workspace.xml
+./idea/workspace.xml
 .idea
 
 # Arquivos do Projeto

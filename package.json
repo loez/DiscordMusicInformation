@@ -12,6 +12,7 @@
   "dependencies": {
     "discord.js": "^12.3.1",
     "ffmpeg-static": "^4.2.7",
+    "naudiodon": "^2.2.4",
     "node-opus": "^0.3.3",
     "request": "^2.88.2",
     "ytdl-core": "^3.4.2"
