@@ -4,6 +4,7 @@ const request = require("request");
 const configuracao = require("./config.json")
 const ytdl = require('ytdl-core');
 let audioplay;
+let listamusicas = [];
 
 const options = {
     url: 'https://api.deezer.com/user/' + configuracao.DeezerUser + '/history&access_token=' + configuracao.DeezerToken + '&expires=0'
@@ -11,12 +12,6 @@ const options = {
 
 function RetornaMusica(musicaAtual) {
     console.log(musicaAtual);
-
-    const dispatcher = audioplay.play(musicaAtual.preview, {volume: 0.2});
-
-    dispatcher.on('finish', () => {
-        audioplay.disconnect();
-    });
 
     const canal = client.channels.cache.get(configuracao.CanalID);
     const Embed = new Discord.MessageEmbed()
@@ -74,9 +69,41 @@ function musica(callback) {
 client.login(configuracao.DiscordToken)
     .then(() => {
         setTimeout(async function () {
-            audioplay = await client.channels.cache.get(configuracao.CanalAudio).join();
+
             musicaTime(0);
         }, 10000);
 
     });
 
+client.on('message', async msg => {
+    if (msg.content.startsWith('!')) {
+        if (listamusicas.length <= 0) {
+            audioplay = await client.channels.cache.get(configuracao.CanalAudio).join();
+            listamusicas.push(msg.content.split("!")[1])
+            proximamusica(listamusicas[0], listamusicas)
+        }else{
+            listamusicas.push(msg.content.split("!")[1])
+        }
+    }
+    if (msg.content.includes('!proxima')){
+        listamusicas.shift();
+        proximamusica(listamusicas[0], listamusicas)
+    }
+});
+
+const proximamusica = (link, listamusicas) => new Promise( (sucess) => {
+    if (listamusicas.length > 0) {
+        const disparador = audioplay.play(ytdl(link, {filter: 'audioonly'}), {volume: 0.1})
+            .on('finish',() =>{
+                listamusicas.shift();
+                if (listamusicas.length === 0) {
+                    audioplay.disconnect();
+                } else {
+                    sucess(proximamusica(listamusicas[0], listamusicas));
+                }
+            })
+            .on('error',(erro) =>{
+                console.log(erro);
+            })
+    }
+});
