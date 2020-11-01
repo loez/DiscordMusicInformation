@@ -4,6 +4,8 @@ const request = require("request");
 const configuracao = require("./config.json")
 const ytdl = require('ytdl-core');
 let audioplay;
+let disparador;
+let volumeMusica = 0.1;
 let listamusicas = [];
 
 const options = {
@@ -11,8 +13,6 @@ const options = {
 };
 
 function RetornaMusica(musicaAtual) {
-    console.log(musicaAtual);
-
     const canal = client.channels.cache.get(configuracao.CanalID);
     const Embed = new Discord.MessageEmbed()
         .setColor('#0099ff')
@@ -76,24 +76,38 @@ client.login(configuracao.DiscordToken)
     });
 
 client.on('message', async msg => {
-    if (msg.content.startsWith('!')) {
+    if (msg.content.startsWith('!') && msg.content.includes('youtu')) {
         if (listamusicas.length <= 0) {
             audioplay = await client.channels.cache.get(configuracao.CanalAudio).join();
-            listamusicas.push(msg.content.split("!")[1])
-            proximamusica(listamusicas[0], listamusicas)
+            listamusicas.push(msg.content.split("!")[1].trim())
+            proximamusica(listamusicas[0].trim(), listamusicas).then(r => {console.log(r)});
         }else{
-            listamusicas.push(msg.content.split("!")[1])
+            listamusicas.push(msg.content.split("!")[1].trim())
         }
     }
     if (msg.content.includes('!proxima')){
         listamusicas.shift();
-        proximamusica(listamusicas[0], listamusicas)
+        proximamusica(listamusicas[0].trim(), listamusicas).then(r => {console.log(r)});
     }
+    if(msg.content.includes('!volume+')){
+        if (volumeMusica < 1.0){
+            volumeMusica = volumeMusica + 0.1;
+            disparador.setVolume(volumeMusica);
+        }
+    }
+    if(msg.content.includes('!volume-')){
+        if (volumeMusica > 0.1){
+            volumeMusica = volumeMusica - 0.1;
+            disparador.setVolume(volumeMusica);
+        }
+    }
+
 });
 
-const proximamusica = (link, listamusicas) => new Promise( (sucess) => {
+const proximamusica = (link, listamusicas) => new Promise( (sucess,reject) => {
     if (listamusicas.length > 0) {
-        const disparador = audioplay.play(ytdl(link, {filter: 'audioonly'}), {volume: 0.1})
+        console.log(link);
+         disparador = audioplay.play(ytdl(link, {filter: 'audioonly',highWaterMark : 1<<25}), {volume: volumeMusica,highWaterMark : 1})
             .on('finish',() =>{
                 listamusicas.shift();
                 if (listamusicas.length === 0) {
@@ -103,6 +117,7 @@ const proximamusica = (link, listamusicas) => new Promise( (sucess) => {
                 }
             })
             .on('error',(erro) =>{
+                reject(erro);
                 console.log(erro);
             })
     }
