@@ -80,14 +80,14 @@ client.on('message', async msg => {
         if (listamusicas.length <= 0) {
             audioplay = await client.channels.cache.get(configuracao.CanalAudio).join();
             listamusicas.push(msg.content.split("!")[1].trim())
-            proximamusica(listamusicas[0].trim(), listamusicas).then(r => {console.log(r)});
+            proximamusica(listamusicas[0].trim(), listamusicas);
         }else{
             listamusicas.push(msg.content.split("!")[1].trim())
         }
     }
     if (msg.content.includes('!proxima')){
         listamusicas.shift();
-        proximamusica(listamusicas[0].trim(), listamusicas).then(r => {console.log(r)});
+        proximamusica(listamusicas[0].trim(), listamusicas);
     }
     if(msg.content.includes('!volume+')){
         if (volumeMusica < 1.0){
@@ -107,7 +107,13 @@ client.on('message', async msg => {
 const proximamusica = (link, listamusicas) => new Promise( (sucess,reject) => {
     if (listamusicas.length > 0) {
         console.log(link);
-         disparador = audioplay.play(ytdl(link, {filter: 'audioonly',highWaterMark : 1<<25}), {volume: volumeMusica,highWaterMark : 1})
+
+        ytdl.getInfo(link)
+            .then(info =>{
+                client.user.setActivity(info.title,{type : "LISTENING"});
+            });
+
+         disparador = audioplay.play(ytdl(link, {filter: 'audioonly',highWaterMark : 1<<25}), {volume: volumeMusica})
             .on('finish',() =>{
                 listamusicas.shift();
                 if (listamusicas.length === 0) {
