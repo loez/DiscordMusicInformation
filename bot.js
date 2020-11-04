@@ -7,6 +7,8 @@ let audioplay;
 let disparador;
 let volumeMusica = 0.1;
 let listamusicas = [];
+let usuariosPedidos = [];
+let pedidosProxima = [];
 
 const options = {
     url: 'https://api.deezer.com/user/' + configuracao.DeezerUser + '/history&access_token=' + configuracao.DeezerToken + '&expires=0'
@@ -80,14 +82,21 @@ client.on('message', async msg => {
         if (listamusicas.length <= 0) {
             audioplay = await client.channels.cache.get(configuracao.CanalAudio).join();
             listamusicas.push(msg.content.split("!")[1].trim())
+
             proximamusica(listamusicas[0].trim(), listamusicas);
         }else{
-            listamusicas.push(msg.content.split("!")[1].trim())
+            if(!usuariosPedidos.find(x => x === msg.author.id)){
+                usuariosPedidos.push(msg.author.id);
+                listamusicas.push(msg.content.split("!")[1].trim());
+            }
         }
     }
     if (msg.content.includes('!proxima')){
-        listamusicas.shift();
-        proximamusica(listamusicas[0].trim(), listamusicas);
+        if(!pedidosProxima.find(x => x === msg.author.id)){
+            pedidosProxima.push(msg.author.id);
+            listamusicas.shift();
+            proximamusica(listamusicas[0].trim(), listamusicas);
+        }
     }
     if(msg.content.includes('!volume+')){
         if (volumeMusica < 1.0){
@@ -118,6 +127,8 @@ const proximamusica = (link, listamusicas) => new Promise( (sucess,reject) => {
                 listamusicas.shift();
                 if (listamusicas.length === 0) {
                     audioplay.disconnect();
+                    usuariosPedidos = [];
+                    pedidosProxima = [];
                 } else {
                     sucess(proximamusica(listamusicas[0], listamusicas));
                 }
