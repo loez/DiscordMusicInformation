@@ -82,7 +82,6 @@ client.on('message', async msg => {
         if (listamusicas.length <= 0) {
             audioplay = await client.channels.cache.get(configuracao.CanalAudio).join();
             listamusicas.push(msg.content.split("!")[1].trim())
-
             proximamusica(listamusicas[0].trim(), listamusicas);
         } else {
             listamusicas.push(msg.content.split("!")[1].trim());
@@ -115,7 +114,7 @@ client.on('message', async msg => {
                     listamusicas.push(retornoBusca)
                     proximamusica(listamusicas[0], listamusicas);
                 } else {
-                    listamusicas.push(listamusicas[0], listamusicas);
+                    listamusicas.push(retornoBusca);
                 }
             })
     }
