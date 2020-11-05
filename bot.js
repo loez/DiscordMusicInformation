@@ -121,14 +121,17 @@ client.on('message', async msg => {
 
 });
 
-const proximamusica = (link, listamusicas) => new Promise((sucess, reject) => {
+const proximamusica = (link, listamusicas) => new Promise(async(sucess, reject) => {
     if (listamusicas.length > 0) {
         console.log(link);
 
-        ytdl.getInfo(link)
-            .then(info => {
-                client.user.setActivity(info.title, {type: "LISTENING"});
-            });
+         await ytdl.getInfo(link)
+            .then((info) => {
+                 client.user.setActivity(info.videoDetails.title, {type: "LISTENING"});
+            })
+             .catch((error) => {
+                 console.log(error);
+             })
 
         disparador = audioplay.play(ytdl(link, {filter: 'audioonly', highWaterMark: 1 << 25}), {volume: volumeMusica})
             .on('finish', () => {
@@ -149,7 +152,7 @@ const proximamusica = (link, listamusicas) => new Promise((sucess, reject) => {
 const retornaMusicaYoutube = (busca) => new Promise((success) => {
     youtubeSearch.search(busca, {limit: 1})
         .then(x => {
-            let urlVideo = 'http://www.youtube.com/watch?v=' + x[0].id
+            let urlVideo = x[0].id;
             success(urlVideo);
         })
         .catch(console.error);
