@@ -91,18 +91,23 @@ client.on('message', async msg => {
         if (!pedidosProxima.find(x => x === msg.author.id)) {
             pedidosProxima.push(msg.author.id);
             listamusicas.shift();
-            proximamusica(listamusicas[0].trim(), listamusicas);
+            if (listamusicas.length >0){
+                proximamusica(listamusicas[0].trim(), listamusicas);
+            }else{
+                audioplay.disconnect();
+            }
+
         }
     }
     if (msg.content.includes('!volume+')) {
         if (volumeMusica < 1.0) {
-            volumeMusica = volumeMusica + 0.1;
+            volumeMusica += 0.1;
             disparador.setVolume(volumeMusica);
         }
     }
     if (msg.content.includes('!volume-')) {
         if (volumeMusica > 0.1) {
-            volumeMusica = volumeMusica - 0.1;
+            volumeMusica -= 0.1;
             disparador.setVolume(volumeMusica);
         }
     }
