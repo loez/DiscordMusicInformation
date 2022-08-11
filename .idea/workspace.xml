@@ -22,7 +22,7 @@
     <list default="true" id="d4c7a005-d5e7-4f34-aa24-cb2f8d8a1213" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bot.js" beforeDir="false" afterPath="$PROJECT_DIR$/bot.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -136,7 +136,7 @@
       <workItem from="1609321340657" duration="4088000" />
       <workItem from="1613386886954" duration="126000" />
       <workItem from="1660246824622" duration="575000" />
-      <workItem from="1660253079910" duration="483000" />
+      <workItem from="1660253079910" duration="787000" />
     </task>
     <servers />
   </component>
