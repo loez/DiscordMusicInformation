@@ -43,10 +43,12 @@ client.on('message', async msg => {
                     listamusicas.push({ 'link': msg.content.split("!")[1].trim(), 'canal': msg.member.voice.channel.id === null ? configuracao.CanalAudio : msg.member.voice.channel.id });
                 }
 
+                pedidosdoFabricio.push(msg.author.lastMessage);
+
             } else {
-                console.log('Chega Fabrício!!');
+                canalTexto.send('Chega Fabrício!!');
             };
-        }
+        };
 
     }
 
