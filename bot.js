@@ -10,8 +10,8 @@ let volumeMusica = 0.1;
 let listamusicas = [];
 let pedidosProxima = [];
 let pedidosdoFabricio = [];
-let idFabricio = 691768022951526581;
 let canalTexto;
+let idFabricio = 691768022951526581;
 
 client.login(configuracao.DiscordToken)
     .then(async () => {
@@ -21,24 +21,8 @@ client.login(configuracao.DiscordToken)
 client.on('message', async msg => {
     canalTexto = await client.channels.cache.get('918946878031269918');
 
-    // console.log(msg.author.id);
-
     if (msg.content.startsWith('!') && msg.content.includes('youtu')) {
         if (!(msg.author.id === idFabricio)) {
-
-            addMusica();
-        } else {
-
-            if (pedidosdoFabricio <= 2) {
-                addMusica();
-                pedidosdoFabricio.push(msg.)
-            } else {
-                console.log('Chega Fabrício!');
-            };
-
-        }
-
-        function addMusica() {
 
             if (listamusicas.length <= 0) {
                 audioplay = await client.channels.cache.get(msg.member.voice.channel.id === null ? configuracao.CanalAudio : msg.member.voice.channel.id).join();
@@ -46,9 +30,22 @@ client.on('message', async msg => {
                 proximaMusica(listamusicas[0], listamusicas);
             } else {
                 listamusicas.push({ 'link': msg.content.split("!")[1].trim(), 'canal': msg.member.voice.channel.id === null ? configuracao.CanalAudio : msg.member.voice.channel.id });
-
             }
+        } else {
 
+            if (pedidosdoFabricio <= 2) {
+
+                if (listamusicas.length <= 0) {
+                    audioplay = await client.channels.cache.get(msg.member.voice.channel.id === null ? configuracao.CanalAudio : msg.member.voice.channel.id).join();
+                    listamusicas.push({ 'link': msg.content.split("!")[1].trim(), 'canal': msg.member.voice.channel.id === null ? configuracao.CanalAudio : msg.member.voice.channel.id });
+                    proximaMusica(listamusicas[0], listamusicas);
+                } else {
+                    listamusicas.push({ 'link': msg.content.split("!")[1].trim(), 'canal': msg.member.voice.channel.id === null ? configuracao.CanalAudio : msg.member.voice.channel.id });
+                }
+
+            } else {
+                console.log('Chega Fabrício!');
+            };
         }
 
     }
@@ -100,7 +97,7 @@ client.on('message', async msg => {
             );
     };
 
-    if (msg.content.includes('!reset' && (msg.author.id === Leandro / Rapha / Luiz / Rainner))) {
+    if (msg.content.includes('!reset' && (msg.author.id === '745653678853324983' || msg.author.id === '691767726456438805'))) {
         pedidosdoFabricio = [];
     };
 
@@ -151,4 +148,3 @@ const retornaMusicaYoutube = (busca) => new Promise((success) => {
         })
         .catch(console.error);
 });
-
