@@ -1,4 +1,4 @@
-﻿const Discord = require("discord.js");
+const Discord = require("discord.js");
 const client = new Discord.Client();
 const configuracao = require("./config.json")
 const ytdl = require('ytdl-core');
@@ -9,41 +9,66 @@ let disparador;
 let volumeMusica = 0.1;
 let listamusicas = [];
 let pedidosProxima = [];
+let pedidosdoFabricio = [];
+let idFabricio = 691768022951526581;
 let canalTexto;
 
 client.login(configuracao.DiscordToken)
     .then(async () => {
         console.log('Conectado');
-    })
+    });
 
 client.on('message', async msg => {
-    canalTexto = await client.channels.cache.get('773856165158453258');
+    canalTexto = await client.channels.cache.get('918946878031269918');
+
+    // console.log(msg.author.id);
+
     if (msg.content.startsWith('!') && msg.content.includes('youtu')) {
-        if (listamusicas.length <= 0) {
-            audioplay = await client.channels.cache.get(msg.member.voice.channel.id === null? configuracao.CanalAudio : msg.member.voice.channel.id).join();
-            listamusicas.push({'link' : msg.content.split("!")[1].trim(), 'canal' : msg.member.voice.channel.id === null? configuracao.CanalAudio : msg.member.voice.channel.id})
-            proximamusica(listamusicas[0], listamusicas);
+        if (!(msg.author.id === idFabricio)) {
+
+            addMusica();
         } else {
-            listamusicas.push({'link' : msg.content.split("!")[1].trim(), 'canal' :  msg.member.voice.channel.id === null? configuracao.CanalAudio : msg.member.voice.channel.id});
+
+            if (pedidosdoFabricio <= 2) {
+                addMusica();
+                console.log(pedidosdoFabricio.length);
+            } else {
+                console.log('Chega Fabrício!');
+            };
+
         }
+
+        function addMusica() {
+
+            if (listamusicas.length <= 0) {
+                audioplay = await client.channels.cache.get(msg.member.voice.channel.id === null ? configuracao.CanalAudio : msg.member.voice.channel.id).join();
+                listamusicas.push({ 'link': msg.content.split("!")[1].trim(), 'canal': msg.member.voice.channel.id === null ? configuracao.CanalAudio : msg.member.voice.channel.id });
+                proximaMusica(listamusicas[0], listamusicas);
+            } else {
+                listamusicas.push({ 'link': msg.content.split("!")[1].trim(), 'canal': msg.member.voice.channel.id === null ? configuracao.CanalAudio : msg.member.voice.channel.id });
+
+            }
+
+        }
+
     }
 
-    if(msg.content.toLocaleLowerCase() === '!volume'){
+    if (msg.content.toLocaleLowerCase() === '!volume') {
         canalTexto.send('Volume atual é ' + volumeMusica.toString())
-    }
+    };
 
     if (msg.content.includes('!proxima')) {
         if (!pedidosProxima.find(x => x === msg.author.id)) {
             pedidosProxima.push(msg.author.id);
             listamusicas.shift();
-            if (listamusicas.length >0){
-                proximamusica(listamusicas[0], listamusicas);
-            }else{
+            if (listamusicas.length > 0) {
+                proximaMusica(listamusicas[0], listamusicas);
+            } else {
                 audioplay.disconnect();
             }
 
         }
-    }
+    };
 
     if (msg.content.includes('!volume+')) {
         if (volumeMusica < 1.0) {
@@ -51,7 +76,7 @@ client.on('message', async msg => {
             disparador.setVolume(volumeMusica);
             canalTexto.send('Volume atual é ' + volumeMusica.toFixed(2))
         }
-    }
+    };
 
     if (msg.content.includes('!volume-')) {
         if (volumeMusica > 0.1) {
@@ -59,52 +84,54 @@ client.on('message', async msg => {
             disparador.setVolume(volumeMusica);
             canalTexto.send('Volume atual é ' + volumeMusica.toFixed(2))
         }
-    }
+    };
 
     if (msg.content.includes('!busca')) {
         retornaMusicaYoutube(msg.content.split('!busca')[1].trimStart())
             .then(async (retornoBusca) => {
                 if (listamusicas.length <= 0) {
-                    audioplay = await client.channels.cache.get(msg.member.voice.channel.id === null? configuracao.CanalAudio : msg.member.voice.channel.id).join();
+                    audioplay = await client.channels.cache.get(msg.member.voice.channel.id === null ? configuracao.CanalAudio : msg.member.voice.channel.id).join();
                     listamusicas.push(retornoBusca)
-                    proximamusica(listamusicas[0], listamusicas);
+                    proximaMusica(listamusicas[0], listamusicas);
                 } else {
-                    listamusicas.push({'link' : retornoBusca, 'canal':msg.member.voice.channel.id === null? configuracao.CanalAudio : msg.member.voice.channel.id});
-                }      }
+                    listamusicas.push({ 'link': retornoBusca, 'canal': msg.member.voice.channel.id === null ? configuracao.CanalAudio : msg.member.voice.channel.id });
+                }
+            }
             );
     }
 });
-const proximamusica = (link, listamusicas) => new Promise(async(sucess, reject) => {
+
+const proximaMusica = (link, listamusicas) => new Promise(async (sucess, reject) => {
     if (listamusicas.length > 0) {
         console.log(link['link']);
         await ytdl.getInfo(link['link'].trim())
             .then((info) => {
-                client.user.setActivity(info.videoDetails.title, {type: "LISTENING"});
+                client.user.setActivity(info.videoDetails.title, { type: "LISTENING" });
             })
             .catch((error) => {
                 console.log(error);
             })
-        audioplay = await client.channels.cache.get(link['canal']=== null ? configuracao.CanalAudio : link['canal'] ).join();
+        audioplay = await client.channels.cache.get(link['canal'] === null ? configuracao.CanalAudio : link['canal']).join();
 
-        disparador = audioplay.play(ytdl(link['link'].trim(), {filter: 'audioonly', highWaterMark: 1 << 25}), {volume: volumeMusica})
+        disparador = audioplay.play(ytdl(link['link'].trim(), { filter: 'audioonly', highWaterMark: 1 << 25 }), { volume: volumeMusica })
             .on('finish', () => {
                 listamusicas.shift();
                 if (listamusicas.length === 0) {
-                    client.user.setActivity('Esperando a próxima música', {type: "LISTENING"});
+                    client.user.setActivity('Esperando a próxima música', { type: "LISTENING" });
                     audioplay.disconnect();
                     pedidosProxima = [];
                 } else {
-                    sucess(proximamusica(listamusicas[0], listamusicas));
+                    sucess(proximaMusica(listamusicas[0], listamusicas));
                 }
             })
             .on('error', (erro) => {
                 listamusicas.shift();
                 if (listamusicas.length === 0) {
-                    client.user.setActivity('Esperando a próxima música', {type: "LISTENING"});
+                    client.user.setActivity('Esperando a próxima música', { type: "LISTENING" });
                     audioplay.disconnect();
                     pedidosProxima = [];
                 } else {
-                    reject(proximamusica(listamusicas[0], listamusicas));
+                    reject(proximaMusica(listamusicas[0], listamusicas));
                 }
                 console.log(erro);
             })
@@ -112,10 +139,11 @@ const proximamusica = (link, listamusicas) => new Promise(async(sucess, reject) 
 });
 
 const retornaMusicaYoutube = (busca) => new Promise((success) => {
-    youtubeSearch.default.search(busca, {limit: 1})
+    youtubeSearch.default.search(busca, { limit: 1 })
         .then(x => {
             let urlVideo = x[0].id;
             success(urlVideo);
         })
         .catch(console.error);
 });
+
