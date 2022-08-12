@@ -31,7 +31,7 @@ client.on('message', async msg => {
 
             if (pedidosdoFabricio <= 2) {
                 addMusica();
-                console.log(pedidosdoFabricio.length);
+                pedidosdoFabricio.push(msg.)
             } else {
                 console.log('Chega Fabrício!');
             };
@@ -98,7 +98,12 @@ client.on('message', async msg => {
                 }
             }
             );
-    }
+    };
+
+    if (msg.content.includes('!reset' && (msg.author.id === Leandro / Rapha / Luiz / Rainner))) {
+        pedidosdoFabricio = [];
+    };
+
 });
 
 const proximaMusica = (link, listamusicas) => new Promise(async (sucess, reject) => {
