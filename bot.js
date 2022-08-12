@@ -46,7 +46,7 @@ client.on('message', async msg => {
                 pedidosdoFabricio.push(msg.author.lastMessage);
 
             } else {
-                canalTexto.send('Chega Fabrício!!');
+                canalTexto.send('Chega Fabrício!');
             };
         };
 
