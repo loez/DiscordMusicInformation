@@ -4,18 +4,29 @@
   "description": "Bot que mostra as músicas escutadas no Deezer",
   "main": "bot.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node bot.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "Luiz Mello",
   "license": "ISC",
   "dependencies": {
-    "@discordjs/opus": "^0.8.0",
-    "discord.js": "^12.5.3",
-    "ffmpeg-static": "^5.0.2",
+    "@discordjs/opus": "^0.3.3",
+    "discord.js": "^12.5.1",
+    "ffmpeg-static": "^4.2.7",
+    "node-opus": "^0.3.3",
+    "pkg": "^4.4.9",
     "request": "^2.88.2",
-    "youtube-sr": "4.3.0",
-    "ytdl-core": "^4.9.0"
+    "youtube-sr": "^2.0.4",
+    "ytdl-core": "^4.1.0"
+  },
+  "bin": "bot.js",
+  "pkg": {
+    "assets": [
+      "./**",
+      "./*"
+    ],
+    "target": [
+      "node12"
+    ]
   }
 }
