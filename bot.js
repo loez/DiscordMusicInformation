@@ -44,7 +44,7 @@ client.on('message', async msg => {
                 }
 
             } else {
-                console.log('Chega Fabrício!');
+                console.log('Chega Fabrício!!');
             };
         }
 
