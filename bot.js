@@ -11,7 +11,7 @@ let listamusicas = [];
 let pedidosProxima = [];
 let pedidosdoFabricio = [];
 let canalTexto;
-let idFabricio = '691768022951526581';
+let idFabricio = 691768022951526581;
 
 client.login(configuracao.DiscordToken)
     .then(async () => {
@@ -19,7 +19,7 @@ client.login(configuracao.DiscordToken)
     });
 
 client.on('message', async msg => {
-    canalTexto = await client.channels.cache.get('918946878031269918');
+    canalTexto = await client.channels.cache.get('773856165158453258');
 
     if (msg.content.startsWith('!') && msg.content.includes('youtu')) {
         if (!(msg.author.id === idFabricio)) {
@@ -47,14 +47,14 @@ client.on('message', async msg => {
 
             } else {
                 canalTexto.send('Chega Fabrício!');
-            };
-        };
+            }
+        }
 
     }
 
     if (msg.content.toLocaleLowerCase() === '!volume') {
         canalTexto.send('Volume atual é ' + volumeMusica.toString())
-    };
+    }
 
     if (msg.content.includes('!proxima')) {
         if (!pedidosProxima.find(x => x === msg.author.id)) {
@@ -67,7 +67,7 @@ client.on('message', async msg => {
             }
 
         }
-    };
+    }
 
     if (msg.content.includes('!volume+')) {
         if (volumeMusica < 1.0) {
@@ -75,7 +75,7 @@ client.on('message', async msg => {
             disparador.setVolume(volumeMusica);
             canalTexto.send('Volume atual é ' + volumeMusica.toFixed(2))
         }
-    };
+    }
 
     if (msg.content.includes('!volume-')) {
         if (volumeMusica > 0.1) {
@@ -83,7 +83,7 @@ client.on('message', async msg => {
             disparador.setVolume(volumeMusica);
             canalTexto.send('Volume atual é ' + volumeMusica.toFixed(2))
         }
-    };
+    }
 
     if (msg.content.includes('!busca')) {
         retornaMusicaYoutube(msg.content.split('!busca')[1].trimStart())
@@ -97,11 +97,11 @@ client.on('message', async msg => {
                 }
             }
             );
-    };
+    }
 
     if (msg.content.includes('!reset') && (msg.author.id === '745653678853324983' || msg.author.id === '691767726456438805')) {
         pedidosdoFabricio = [];
-    };
+    }
 
 });
 
