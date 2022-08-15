@@ -11,7 +11,7 @@ let listamusicas = [];
 let pedidosProxima = [];
 let pedidosdoFabricio = [];
 let canalTexto;
-let idFabricio = 691768022951526581;
+let idFabricio = '691768022951526581';
 
 client.login(configuracao.DiscordToken)
     .then(async () => {
@@ -110,7 +110,7 @@ const proximaMusica = (link, listamusicas) => new Promise(async (sucess, reject)
         console.log(link['link']);
         await ytdl.getInfo(link['link'].trim())
             .then((info) => {
-                client.user.setActivity(info.videoDetails.title, { type: "LISTENING" });
+                client.user.setActivity('Ouvindo ' +info.videoDetails.title, { type: "LISTENING" });
             })
             .catch((error) => {
                 console.log(error);
