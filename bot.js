@@ -11,7 +11,7 @@ let listamusicas = [];
 let pedidosProxima = [];
 let pedidosdoFabricio = [];
 let canalTexto;
-let idFabricio = 691768022951526581;
+let idFabricio = '691768022951526581';
 
 client.login(configuracao.DiscordToken)
     .then(async () => {
@@ -99,7 +99,7 @@ client.on('message', async msg => {
             );
     };
 
-    if (msg.content.includes('!reset' && (msg.author.id === '745653678853324983' || msg.author.id === '691767726456438805'))) {
+    if (msg.content.includes('!reset') && (msg.author.id === '745653678853324983' || msg.author.id === '691767726456438805')) {
         pedidosdoFabricio = [];
     };
 
