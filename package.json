@@ -17,7 +17,7 @@
     "pkg": "^4.4.9",
     "request": "^2.88.2",
     "youtube-sr": "^2.0.4",
-    "ytdl-core": "^4.1.0"
+    "ytdl-core": "^4.11.0"
   },
   "bin": "bot.js",
   "pkg": {
